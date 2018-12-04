@@ -3,6 +3,7 @@ import topImg from "./top.png";
 import middleImg from "./middle.png";
 import bottomImg from "./bottom.png";
 import "./App.css";
+import PropTypes from "prop-types";
 
 const tacos = [
   {
@@ -38,6 +39,7 @@ class App extends Component {
           )}
         />
         <Card2
+          renderTop={() => <img src={topImg} alt="" />}
           renderImg={() => <img src={middleImg} alt="" />}
           renderBottom={() => <img src={bottomImg} alt="" />}
         />
@@ -62,14 +64,29 @@ class Card extends Component {
 }
 
 class Card2 extends Component {
+  state = {
+    name: "hi"
+  };
+
+  handleClick = () => {};
+
+  propTypes = {
+    name: PropTypes.string.isRequired,
+    hp: PropTypes.number,
+    renderImg: PropTypes.func.isRequired,
+    renderBottom: PropTypes.func.isRequired
+  };
   render() {
     return (
-      <div className="card">
-        <h5>
-          {this.props.name} - {this.props.hp}
-        </h5>
-        {this.props.renderImg()}
-        {this.props.renderBottom()}
+      <div>
+          <h5>
+            {this.props.name} - {this.props.hp}
+          </h5>
+        <div className="card">
+          {this.props.renderTop()}
+          {this.props.renderImg()}
+          {this.props.renderBottom()}
+        </div>
       </div>
     );
   }
@@ -81,7 +98,7 @@ class List extends Component {
     return (
       <div>
         {data.map(x => {
-          return this.props.renderItem(x);
+          return <listitem>{this.props.renderItem(x)}</listitem>;
         })}
       </div>
     );
